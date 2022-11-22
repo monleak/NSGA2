@@ -39,7 +39,7 @@ public class Population {
                 }
             }
             if(pop.get(i).countDomination == 0){
-                pop.get(i).rank = 1;
+                pop.get(i).rank = 0;
                 if(Front.size() < 1){
                     ArrayList<Individual> F1 = new ArrayList<>();
                     Front.add(F1);
