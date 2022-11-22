@@ -10,4 +10,5 @@ public class Params {
     public static int maxSizeChromosome = 30; //Số chiều của không gian tìm kiếm
     public static int REPT = 30;
     public static int maxSizePOP = 100;
+    public static final double NC = 2;
 }

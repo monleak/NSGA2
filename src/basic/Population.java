@@ -3,15 +3,17 @@ package basic;
 import benchmark.Problem;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Population {
     public ArrayList<Individual> pop;
     public Problem prob;
     public ArrayList<ArrayList<Individual>> Front;
 
-    public Population(){
+    public Population(Problem prob){
         this.pop = new ArrayList<>();
         this.Front = new ArrayList<>();
+        this.prob = prob;
     }
     public void init(){
         while (pop.size() < Params.maxSizePOP){
@@ -72,9 +74,25 @@ public class Population {
             Front.get(count).clear();
             Front.get(count).addAll(Q);
         }
+        //sort pop
+        sortPopByRank();
+        //resize pop
+        while (pop.size() > Params.maxSizePOP){
+            pop.remove(pop.size()-1);
+        }
     }
 
-    public boolean isDominates(Individual x1, Individual x2){
+    public void sortPopByRank() {
+        //Sắp xếp lại các cá thể trong quần thể
+        this.pop.sort(new Comparator<Individual>() {
+            @Override
+            public int compare(Individual o1, Individual o2) {
+                return Integer.compare(o1.rank, o2.rank);
+            }
+        });
+    }
+
+    public static boolean isDominates(Individual x1, Individual x2){
         if( (x1.fitness[0] < x2.fitness[0] && x1.fitness[1] <= x2.fitness[1])
             || (x1.fitness[0] <= x2.fitness[0] && x1.fitness[1] < x2.fitness[1])
         ){
