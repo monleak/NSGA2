@@ -16,6 +16,7 @@ public class Population {
         this.prob = prob;
     }
     public void init(){
+        pop.clear();
         while (pop.size() < Params.maxSizePOP){
             Individual indiv = new Individual(prob.n);
             indiv.init();
@@ -27,6 +28,7 @@ public class Population {
         }
     }
     public void update(){
+        Front.clear();
         for(int i=0;i<pop.size();i++){
             pop.get(i).S.clear();
             pop.get(i).countDomination = 0;

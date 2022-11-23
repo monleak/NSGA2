@@ -18,6 +18,15 @@ public class Individual implements Comparable<Individual>{
         this.chromosome = new double[this.dim];
         this.S = new ArrayList<>();
         this.rank = Integer.MAX_VALUE;
+        this.fitness = new double[2];
+    }
+    public Individual(double[] chromosome) {
+        this.individual_id = Individual.counter++;
+        this.dim = chromosome.length;
+        this.chromosome = chromosome.clone();
+        this.S = new ArrayList<>();
+        this.rank = Integer.MAX_VALUE;
+        this.fitness = new double[2];
     }
     public void init(){
         for(int i=0;i<dim;i++){
