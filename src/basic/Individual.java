@@ -12,21 +12,21 @@ public class Individual implements Comparable<Individual>{
 
     public ArrayList<Individual> S; //solutions dominated by this
     public int countDomination;
-    public Individual(int dim) {
+    public Individual(int dim, int countObj) {
         this.individual_id = Individual.counter++;
         this.dim = dim;
         this.chromosome = new double[this.dim];
         this.S = new ArrayList<>();
         this.rank = Integer.MAX_VALUE;
-        this.fitness = new double[2];
+        this.fitness = new double[countObj];
     }
-    public Individual(double[] chromosome) {
+    public Individual(double[] chromosome, int countObj) {
         this.individual_id = Individual.counter++;
         this.dim = chromosome.length;
         this.chromosome = chromosome.clone();
         this.S = new ArrayList<>();
         this.rank = Integer.MAX_VALUE;
-        this.fitness = new double[2];
+        this.fitness = new double[countObj];
     }
     public void init(){
         for(int i=0;i<dim;i++){

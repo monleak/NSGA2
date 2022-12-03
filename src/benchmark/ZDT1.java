@@ -9,12 +9,16 @@ import java.util.Arrays;
 public class ZDT1 extends Problem{
     public ZDT1(){
         n=30;
+        countObj = 2;
         this.UB = new double[n];
         this.LB = new double[n];
         Arrays.fill(this.LB,0);
         Arrays.fill(this.UB,1);
     }
-
+    public void calFitness(Individual x){
+        x.fitness[0] = calF1(x.chromosome);
+        x.fitness[1] = calF2(x.chromosome);
+    }
     public double calF1(double[] x){
         Params.countEvals++;
         return x[0] * (this.UB[0] - this.LB[0]) + this.LB[0];

@@ -6,7 +6,9 @@ import basic.Population;
 import benchmark.Problem;
 import util.SBX;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static util.IGD.EuclideanDistance;
 
@@ -14,17 +16,17 @@ public class NSGA2 {
     public Population pop;
     public Problem prob;
 
+
     public NSGA2(Problem prob) {
         this.prob = prob;
         this.pop = new Population(prob);
-
     }
 
     public double run1(){
         Params.countEvals=0;
         int countGEN = 0;
 
-        this.pop.init();
+        this.pop.init(prob.countObj);
         this.pop.update();
 
         for(int i=0;i<pop.Front.get(0).size();i++){
@@ -35,7 +37,7 @@ public class NSGA2 {
             System.out.print("\n");
         }
 
-        while (countGEN <= 500) {
+        while (countGEN <= 300) {
             ArrayList<Individual> offspring = new ArrayList<Individual>();
             for (Individual indiv : pop.pop) {
                 Individual indiv2;
@@ -45,8 +47,7 @@ public class NSGA2 {
 
                 ArrayList<Individual> child = inter_crossover(indiv,indiv2);
                 for(int i=0;i<child.size();i++){
-                    child.get(i).fitness[0] = prob.calF1(child.get(i).chromosome);
-                    child.get(i).fitness[1] = prob.calF2(child.get(i).chromosome);
+                    prob.calFitness(child.get(i));
                 }
                 offspring.addAll(child);
             }
@@ -67,8 +68,14 @@ public class NSGA2 {
         }
         double IGD = 0.0;
         for(int i=0;i<pop.Front.get(0).size();i++){
+            /* ZDT1
             double[] temp = new double[pop.Front.get(0).get(i).chromosome.length];
             temp[0] = pop.Front.get(0).get(i).chromosome[0];
+            */
+
+            //DTLZ1
+            double[] temp = new double[pop.Front.get(0).get(i).chromosome.length];
+            Arrays.fill(temp,0.5);
 
             IGD += Math.pow(EuclideanDistance(pop.Front.get(0).get(i).chromosome,temp),2);
         }
@@ -86,8 +93,8 @@ public class NSGA2 {
             }
         }
         ArrayList<Individual> offspring = new ArrayList<Individual>();
-        offspring.add(new Individual(offspring_gene.get(0)));
-        offspring.add(new Individual(offspring_gene.get(1)));
+        offspring.add(new Individual(offspring_gene.get(0), prob.countObj));
+        offspring.add(new Individual(offspring_gene.get(1), prob.countObj));
         return offspring;
     }
 }

@@ -15,16 +15,15 @@ public class Population {
         this.Front = new ArrayList<>();
         this.prob = prob;
     }
-    public void init(){
+    public void init(int countObj){
         pop.clear();
         while (pop.size() < Params.maxSizePOP){
-            Individual indiv = new Individual(prob.n);
+            Individual indiv = new Individual(prob.n,countObj);
             indiv.init();
             pop.add(indiv);
         }
         for(int i=0;i<pop.size();i++){
-            pop.get(i).fitness[0] = prob.calF1(pop.get(i).chromosome);
-            pop.get(i).fitness[1] = prob.calF2(pop.get(i).chromosome);
+            prob.calFitness(pop.get(i));
         }
     }
     public void update(){
