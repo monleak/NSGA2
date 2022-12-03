@@ -19,11 +19,8 @@ public class DTLZ1 extends Problem{
 
     public void calFitness(Individual x){
         double temp = 0;
-        for(int i=0; i<n; i++){
-            x.chromosome[i] = max(0.0, min(x.chromosome[i], 1.0));
-        }
         for(int i=2; i<n; i++){
-            temp += ((x.chromosome[i]-0.5)*(x.chromosome[i]-0.5)) - cos(20* PI*(x.chromosome[i] - 0.5));
+            temp += Math.pow(x.chromosome[i]-0.5,2) - cos(20* PI*(x.chromosome[i] - 0.5));
         }
         double g = 100*(K + temp);
         x.fitness[0] = 0.5*x.chromosome[0]*x.chromosome[1]*(1+g);

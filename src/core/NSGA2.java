@@ -76,6 +76,8 @@ public class NSGA2 {
             //DTLZ1
             double[] temp = new double[pop.Front.get(0).get(i).chromosome.length];
             Arrays.fill(temp,0.5);
+            temp[0] = pop.Front.get(0).get(i).chromosome[0];
+            temp[1] = pop.Front.get(0).get(i).chromosome[1];
 
             IGD += Math.pow(EuclideanDistance(pop.Front.get(0).get(i).chromosome,temp),2);
         }
