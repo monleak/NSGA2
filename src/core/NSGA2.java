@@ -8,6 +8,8 @@ import util.SBX;
 
 import java.util.ArrayList;
 
+import static util.IGD.EuclideanDistance;
+
 public class NSGA2 {
     public Population pop;
     public Problem prob;
@@ -18,7 +20,7 @@ public class NSGA2 {
 
     }
 
-    public void run1(){
+    public double run1(){
         Params.countEvals=0;
         int countGEN = 0;
 
@@ -63,6 +65,16 @@ public class NSGA2 {
                 System.out.print("\n");
             }
         }
+        double IGD = 0.0;
+        for(int i=0;i<pop.Front.get(0).size();i++){
+            double[] temp = new double[pop.Front.get(0).get(i).chromosome.length];
+            temp[0] = pop.Front.get(0).get(i).chromosome[0];
+
+            IGD += Math.pow(EuclideanDistance(pop.Front.get(0).get(i).chromosome,temp),2);
+        }
+        IGD = Math.sqrt(IGD)/pop.Front.get(0).size();
+
+        return IGD;
     }
     private ArrayList<Individual> inter_crossover(Individual p1, Individual p2) {
         ArrayList<double[]> offspring_gene = SBX.generateOffspring(p1.chromosome, p2.chromosome);
